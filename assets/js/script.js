@@ -52,11 +52,66 @@ var createTaskEl = function(taskDataObj) {
      taskInfoEl.innerHTML = "<h3 class= 'task-name'>" + taskDataObj.name + "</h3><span class='task-type'>" + taskDataObj.type + "</span>";
      listItemEl.appendChild(taskInfoEl);
  
+     var taskActionsEl = createTaskActions(taskIdCounter);
+     listItemEl.appendChild(taskActionsEl);
+   
+
      //add entire list to item list
      tasksToDoEl.appendChild(listItemEl);
 
      //increase task counter for next unique id
      taskIdCounter++;
+
+};
+
+// function to dynamically create task actions like edit/delete
+
+var createTaskActions = function(taskId) {
+    var actionContainerEl = document.createElement("div");
+    actionContainerEl.className = "task-actions";
+
+    //Create Edit Button
+
+    var editButtonEl = document.createElement("button");
+    editButtonEl.textContent = "Edit";
+    editButtonEl.className = "btn edit-btn";
+    editButtonEl.setAttribute("data-task-id", taskId);
+
+    actionContainerEl.appendChild(editButtonEl);
+
+    //Create Delete Button
+
+    var deleteButtonEl = document.createElement("button");
+    deleteButtonEl.textContent = "Delete";
+    deleteButtonEl.className = "btn delete-btn";
+    deleteButtonEl.setAttribute("data-task-id", taskId);
+
+    actionContainerEl.appendChild(deleteButtonEl);
+
+    // Create Dropdown Menu
+
+    var statusSelectEl = document.createElement("select");
+    statusSelectEl.className = "select-status";
+    statusSelectEl.setAttribute("name", "status-change");
+    statusSelectEl.setAttribute("data-task-id", taskId);
+
+    actionContainerEl.appendChild(statusSelectEl);
+
+    var statusChoices = ["To Do", "In Progress", "Completed"];
+
+    for (var i = 0; i < statusChoices.length; i++) {
+    //create option element for dropdown menu
+    var statusOptionEl = document.createElement("option");
+    statusOptionEl.textContent = statusChoices[i];
+    statusOptionEl.setAttribute("value", statusChoices[i]);
+
+    //append to select
+    statusSelectEl.appendChild(statusOptionEl);
+
+    }
+
+    return actionContainerEl;
+
 
 };
 
