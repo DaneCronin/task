@@ -266,6 +266,23 @@ var saveTasks = function () {
 };
 
 
+// Load tasks function to reload tasks to the app after a page reload
+var loadTasks = function () {
+    localStorage.getItem("tasks", tasks);
+    if (tasks === null) {
+        tasks = [];
+        return false;
+    }
+    
+}
+
+// Get task items from local storage
+
+// Convert tasks from the string format back into an array of objects
+
+// Create a loop to iterate through the task array and create task elements on the page from it
+
+
 
 pageContentEl.addEventListener("click", taskButtonHandler);
 
