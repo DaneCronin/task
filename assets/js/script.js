@@ -268,7 +268,7 @@ var saveTasks = function () {
 
 // Load tasks function to reload tasks to the app after a page reload
 var loadTasks = function () {
-    localStorage.getItem("tasks", tasks);
+    var tasks = JSON.parse(localStorage.getItem("tasks"));
     if (tasks === null) {
         tasks = [];
         return false;
