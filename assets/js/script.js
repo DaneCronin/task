@@ -77,6 +77,8 @@ var createTaskEl = function(taskDataObj) {
      taskDataObj.id = taskIdCounter;
      tasks.push(taskDataObj);
 
+     saveTasks();
+
      //increase task counter for next unique id
      taskIdCounter++;
 
@@ -177,6 +179,22 @@ var editTask = function (taskId) {
 var deleteTask = function(taskId) {
     var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
     taskSelected.remove();
+
+    var updatedTaskArr = [];
+
+    //Loop through current tasks
+    for (var i = 0; i < tasks.length; i++) {
+        // if tasks[i].id doesn't match the value of taskId, keep that task and push it into the new updatedTask array.
+        if (tasks[i].id !== parseInt(taskId)) {
+            updatedTaskArr.push(tasks[i]);
+        }
+    }
+
+    // reassign tasks array to be the same as updatedTaskArr
+tasks = updatedTaskArr;
+
+saveTasks();
+
 };
 
 // function to complete the Edit Task
@@ -196,18 +214,7 @@ var completeEditTask = function(taskName, taskType, taskId) {
         }
     };
 
-    var updatedTaskArr = [];
-
-    //Loop through current tasks
-    for (var i = 0; i < tasks.length; i++) {
-        // if tasks[i].id doesn't match the value of taskId, keep that task and push it into the new updatedTask array.
-        if (tasks[i].id !== parseInt(taskId)) {
-            updatedTaskArr.push(tasks[i]);
-        }
-    }
-
-    // reassign tasks array to be the same as updatedTaskArr
-tasks = updatedTaskArr;
+    
 
     alert("Task Updated!");
 
@@ -215,6 +222,8 @@ tasks = updatedTaskArr;
 
     formEl.removeAttribute("data-task-id");
     document.querySelector("#save-task").textContent = "Add Task";
+
+    saveTasks();
     
 };
 
@@ -246,8 +255,16 @@ var taskStatusChangeHandler = function(event) {
         }
     }
 
-    console.log(tasks);
+    saveTasks();
+
 };
+
+// Function to saveTasks to local storage
+var saveTasks = function () {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
+};
+
 
 
 pageContentEl.addEventListener("click", taskButtonHandler);
