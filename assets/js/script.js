@@ -268,13 +268,13 @@ var saveTasks = function () {
 
 // Load tasks function to reload tasks to the app after a page reload
 var loadTasks = function () {
-    // Convert tasks from the string format back into an array of objects
     var savedTasks = localStorage.getItem("tasks");
     if (savedTasks === null) {
         savedTasks = [];
         return false;
     }
     console.log("Saved Tasks Found!");
+
     // Convert tasks from the string format back into an array of objects
 
     savedTasks = JSON.parse(savedTasks);
@@ -283,7 +283,7 @@ var loadTasks = function () {
     for (var i = 0; i < savedTasks.length; i++) {
         createTaskEl(savedTasks[i]);}
     };
-// Get task items from local storage
+
 
 
 
